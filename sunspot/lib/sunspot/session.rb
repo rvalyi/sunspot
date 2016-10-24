@@ -40,7 +40,7 @@ module Sunspot
     # See Sunspot.new_search
     #
     def new_search(*types, &block)
-      types.flatten!
+#      types.flatten!
       search = Search::StandardSearch.new(
         connection,
         setup_for_types(types),

@@ -49,9 +49,9 @@ module Sunspot
     class Static < Abstract
       def initialize(name, type, options = {}, &block)
         super(name, options, &block)
-        unless name.to_s =~ /^\w+$/
-          raise ArgumentError, "Invalid field name #{name}: only letters, numbers, and underscores are allowed."
-        end
+#        unless name.to_s =~ /^\w+$/
+#          raise ArgumentError, "Invalid field name #{name}: only letters, numbers, and underscores are allowed."
+#        end
         @field =
           if type.is_a?(Type::TextType)
             FulltextField.new(name, options)

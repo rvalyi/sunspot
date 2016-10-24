@@ -121,10 +121,28 @@ module Sunspot
       if field_factory = @field_factories_cache[field_name.to_sym]
         field_factory.build
       else
-        raise(
-          UnrecognizedFieldError,
-          "No field configured for #{@class_name} with name '#{field_name}'"
-        )
+#        raise(
+#          UnrecognizedFieldError,
+#          "No field configured for #{@class_name} with name '#{field_name}'"
+#        )
+
+        type = Type.const_get("StringType").instance
+        options = {stored: true}
+        if field_name.to_s.index('/')
+          if ff = @field_factories_cache[field_name.to_s.split('/')[0].to_sym]
+            options[:multiple] = true if ff.build.multiple?
+          end
+        end
+        add_field_factory(field_name, type, options)
+        if field_factory = @field_factories_cache[field_name.to_sym]
+          field_factory.build
+        else
+          raise(
+            UnrecognizedFieldError,
+            "No field configured for #{@class_name} with name '#{field_name}'"
+          )
+        end
+
       end
     end
 
